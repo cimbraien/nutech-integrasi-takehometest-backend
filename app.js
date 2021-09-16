@@ -18,11 +18,8 @@ const logStream = fs.createWriteStream("./access.log", { flags: "a" });
 app.use(morgan("common", { stream: logStream }));
 
 //
-
-app.get("/", (req, res, next) => {
-  res.send("Boilerplate");
-});
-
+const barangRouter = require("./routes/barang");
+app.use("/barang", barangRouter);
 //
 
 app.use((err, req, res, next) => {
