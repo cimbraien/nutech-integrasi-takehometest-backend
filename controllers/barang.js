@@ -3,8 +3,19 @@ const { barang } = require("../models");
 class BarangController {
   async getBarang(req, res, next) {
     try {
-      const list = await barang.find({});
-      res.status(200).json({ data: list });
+      const list = await barang
+        .find({})
+        .limit(req.query.limit)
+        .skip((req.query.page - 1) * req.query.limit)
+        .sort({ updatedAt: -1 });
+
+      const count = await barang.countDocuments({});
+      res.status(200).json({
+        data: list,
+        total: count,
+        totalPage: Math.ceil(count / req.query.limit),
+        page: req.query.page,
+      });
     } catch (err) {
       next(err);
     }

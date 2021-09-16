@@ -9,9 +9,18 @@ const schema = new mongoose.Schema(
     foto: { type: String, get: formatFoto },
   },
   {
+    timestamps: {
+      createdAt: null,
+      updatedAt: "updatedAt",
+    },
     toJSON: {
       versionKey: false,
       getters: true,
+      transform: function (doc, ret) {
+        ret.id = ret._id;
+        delete ret.updatedAt;
+        delete ret._id;
+      },
     },
   }
 );
