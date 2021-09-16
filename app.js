@@ -14,14 +14,19 @@ app.use(fileupload());
 app.use(express.static("./static"));
 app.use(cors());
 
+// Access logger
 const logStream = fs.createWriteStream("./access.log", { flags: "a" });
 app.use(morgan("common", { stream: logStream }));
 
 //
+const { getToken, verifyToken } = require("./controllers/access");
+app.post("/access", getToken);
+
 const barangRouter = require("./routes/barang");
 app.use("/barang", barangRouter);
 //
 
+// Error handler
 app.use((err, req, res, next) => {
   const status = err.status || 500;
   const msg = err.messages || err.message;

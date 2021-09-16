@@ -1,4 +1,5 @@
 const express = require("express");
+const { verifyToken } = require("../controllers/access");
 const {
   getBarang,
   createBarang,
@@ -14,8 +15,8 @@ const {
 const router = express.Router();
 
 router.get("/", paginationValidator, getBarang);
-router.post("/", createValidator, fieldValidator, createBarang);
-router.put("/:id", fieldValidator, updateBarang);
-router.delete("/:id", deleteBarang);
+router.post("/", verifyToken, createValidator, fieldValidator, createBarang);
+router.put("/:id", verifyToken, fieldValidator, updateBarang);
+router.delete("/:id", verifyToken, deleteBarang);
 
 module.exports = router;
