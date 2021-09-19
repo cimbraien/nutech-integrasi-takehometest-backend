@@ -7,7 +7,7 @@ class BarangController {
         .find({})
         .limit(req.query.limit)
         .skip((req.query.page - 1) * req.query.limit)
-        .sort({ updatedAt: -1 });
+        .sort({ createdAt: -1 });
 
       const count = await barang.countDocuments({});
       res.status(200).json({

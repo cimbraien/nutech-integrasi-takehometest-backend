@@ -10,8 +10,8 @@ const schema = new mongoose.Schema(
   },
   {
     timestamps: {
-      createdAt: null,
-      updatedAt: "updatedAt",
+      createdAt: "createdAt",
+      updatedAt: null,
     },
     toJSON: {
       versionKey: false,
