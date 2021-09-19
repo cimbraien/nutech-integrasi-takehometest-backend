@@ -16,7 +16,8 @@ class BarangValidator {
     try {
       if (req.body.nama) {
         const barangWithNama = await barang.findOne({ nama: req.body.nama });
-        if (barangWithNama)
+
+        if (barangWithNama && req.params.id != barangWithNama._id)
           return next({
             status: 400,
             message: `Barang dengan nama ${req.body.nama} sudah ada dalam database.`,
